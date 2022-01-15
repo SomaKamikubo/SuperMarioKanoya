@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CapsuleCollider2D))]
 [RequireComponent(typeof(Animator))]
@@ -10,9 +11,12 @@ public class PlayerController : MonoBehaviour
 
 
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private int moveSpeed;
+    [SerializeField] private int walkSpeed;
+    [SerializeField] private int dashRatio;
     [SerializeField] private int jumpForce;
     [SerializeField] private Animator animator;
+
+    int moveSpeed;
 
     private bool isMoving = false;
     private bool isJumping = false;
@@ -22,7 +26,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        moveSpeed = walkSpeed;
     }
 
     // Update is called once per frame
@@ -32,6 +36,8 @@ public class PlayerController : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         isMoving = horizontal != 0;
         isFalling = rb.velocity.y < -0.5f;
+
+        Speed();
 
         if (isMoving)
         {
@@ -52,6 +58,13 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("IsMoving", isMoving);
         animator.SetBool("IsJumping", isJumping);
         animator.SetBool("IsFalling", isFalling);
+
+
+        //—Ž‚¿‚½‚ç•œŠˆ‚·‚é
+        if (transform.position.y < -10)
+        {
+            SceneManager.LoadScene("main");
+        }
     }
 
     void Jump()
@@ -67,4 +80,14 @@ public class PlayerController : MonoBehaviour
             isJumping = false;
         }
     }
+
+    void Speed()
+    {
+        if (Input.GetKey(KeyCode.LeftShift))
+            moveSpeed = walkSpeed * dashRatio;
+        else
+            moveSpeed = walkSpeed;
+    }
+
+
 }
