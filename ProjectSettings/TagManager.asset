@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Stage
+  - Enemy
+  - Goal
   layers:
   - Default
   - TransparentFX
@@ -13,9 +15,9 @@ TagManager:
   - Water
   - UI
   - 
-  - 
-  - 
-  - 
+  - Stage
+  - Enemy
+  - Gimmick
   - 
   - 
   - 

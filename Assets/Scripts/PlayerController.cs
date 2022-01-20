@@ -12,12 +12,12 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private int walkSpeed;
-    [SerializeField] private int dashRatio;
+    [SerializeField] private int dashRate;
     [SerializeField] private int jumpForce;
     [SerializeField] private Animator animator;
 
     int moveSpeed;
-    bool dieFlag;
+    public static bool dieFlag;
 
     private bool isMoving = false;
     private bool isJumping = false;
@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         moveSpeed = walkSpeed;
+        dieFlag = false;
     }
 
     // Update is called once per frame
@@ -42,7 +43,8 @@ public class PlayerController : MonoBehaviour
 
         if (transform.position.x < screen_LeftBottom.x)
         {
-            //transform.Translate(screen_LeftBottom.x, transform.position.y, transform.position.z);
+            Debug.Log(screen_LeftBottom.x);
+            transform.position = new Vector3(screen_LeftBottom.x, transform.position.y, transform.position.z);
         }
 
 
@@ -103,11 +105,20 @@ public class PlayerController : MonoBehaviour
         {
 
             if (Input.GetKey(KeyCode.LeftShift))
-                moveSpeed = walkSpeed * dashRatio;
+                moveSpeed = walkSpeed * dashRate;
             else
                 moveSpeed = walkSpeed;
         }
         
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Goal")
+        {
+            Debug.Log("clera");
+            SceneManager.LoadScene("ClearScene");
+        }
     }
 
 
