@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator animator;
 
     int moveSpeed;
+    bool dieFlag;
 
     private bool isMoving = false;
     private bool isJumping = false;
@@ -36,6 +37,14 @@ public class PlayerController : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         isMoving = horizontal != 0;
         isFalling = rb.velocity.y < -0.5f;
+
+        Vector3 screen_LeftBottom = Camera.main.ScreenToWorldPoint(Vector3.zero);
+
+        if (transform.position.x < screen_LeftBottom.x)
+        {
+            //transform.Translate(screen_LeftBottom.x, transform.position.y, transform.position.z);
+        }
+
 
         Speed();
 
@@ -59,9 +68,16 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("IsJumping", isJumping);
         animator.SetBool("IsFalling", isFalling);
 
+        
 
-        //—Ž‚¿‚½‚ç•œŠˆ‚·‚é
+
         if (transform.position.y < -10)
+        {
+            dieFlag = true;
+        }
+
+        //Ž€‚ñ‚¾‚ç•œŠˆ‚·‚é
+        if (dieFlag)
         {
             SceneManager.LoadScene("main");
         }
@@ -83,10 +99,15 @@ public class PlayerController : MonoBehaviour
 
     void Speed()
     {
-        if (Input.GetKey(KeyCode.LeftShift))
-            moveSpeed = walkSpeed * dashRatio;
-        else
-            moveSpeed = walkSpeed;
+        if (!isJumping)
+        {
+
+            if (Input.GetKey(KeyCode.LeftShift))
+                moveSpeed = walkSpeed * dashRatio;
+            else
+                moveSpeed = walkSpeed;
+        }
+        
     }
 
 
