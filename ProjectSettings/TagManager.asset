@@ -18,8 +18,8 @@ TagManager:
   - Stage
   - Enemy
   - Gimmick
-  - 
-  - 
+  - Coin
+  - Player
   - 
   - 
   - 
@@ -41,12 +41,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: BackGround
+    uniqueID: 272303703
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
   - name: Player
     uniqueID: 313696607
-    locked: 0
-  - name: New Layer
-    uniqueID: 272303703
     locked: 0

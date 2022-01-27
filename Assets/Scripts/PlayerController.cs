@@ -91,13 +91,7 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Stage"))
-        {
-            isJumping = false;
-        }
-    }
+
 
     void Speed()
     {
@@ -118,6 +112,15 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("clera");
             SceneManager.LoadScene("ClearScene");
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Stage"))
+        {
+            isJumping = false;
+            
         }
     }
 
