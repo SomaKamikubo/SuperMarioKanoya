@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int dashRate;
     [SerializeField] private int jumpForce;
     [SerializeField] private Animator animator;
+    [SerializeField] private AudioClip jump;
+    AudioSource audioSource;
 
     int moveSpeed;
     public static bool dieFlag;
@@ -29,6 +31,7 @@ public class PlayerController : MonoBehaviour
     {
         moveSpeed = walkSpeed;
         dieFlag = false;
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -40,6 +43,10 @@ public class PlayerController : MonoBehaviour
         isFalling = rb.velocity.y < -0.5f;
 
         Vector3 screen_LeftBottom = Camera.main.ScreenToWorldPoint(Vector3.zero);
+
+        transform.GetComponent<Rigidbody2D>().AddForce(Vector2.left * 10);
+        transform.GetComponent<Rigidbody2D>().AddForce(Vector2.right * 10);
+
 
         if (transform.position.x < screen_LeftBottom.x)
         {
@@ -73,7 +80,7 @@ public class PlayerController : MonoBehaviour
         
 
 
-        if (transform.position.y < -10)
+        if (transform.position.y < -15)
         {
             dieFlag = true;
         }
@@ -89,6 +96,7 @@ public class PlayerController : MonoBehaviour
     {
         isJumping = true;
         rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        audioSource.PlayOneShot(jump);
     }
 
 
@@ -122,6 +130,11 @@ public class PlayerController : MonoBehaviour
             isJumping = false;
             
         }
+    }
+
+    public bool getIsJumping()
+    {
+        return isJumping;
     }
 
 
