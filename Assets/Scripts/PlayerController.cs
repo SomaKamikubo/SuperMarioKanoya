@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
         
 
 
-        if (transform.position.y < -15)
+        if (transform.position.y < -6)
         {
             dieFlag = true;
         }

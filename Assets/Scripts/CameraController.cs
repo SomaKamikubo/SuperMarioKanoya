@@ -43,7 +43,7 @@ public class CameraController : MonoBehaviour
         pastYDist = playerYDist;
 
 
-        InvokeRepeating(nameof(sameY), 1.0f, 1.0f);
+        //InvokeRepeating(nameof(sameY), 1.0f, 1.0f);
 
         startTime = Time.time;
         moveFlag = false;
@@ -94,7 +94,7 @@ public class CameraController : MonoBehaviour
     {
 
 
-        if (playerPos.y < -6)
+        if (playerPos.y < -3)
             return;
 
         if (playerYDist < 0)
