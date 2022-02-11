@@ -8,7 +8,7 @@ public class Coin : MonoBehaviour
 
 
     [SerializeField] private GameObject soundObject;
-    public Audio audioClass;
+    Audio audioClass;
 
     // Start is called before the first frame update
     void Start()

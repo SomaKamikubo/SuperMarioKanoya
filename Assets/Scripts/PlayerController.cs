@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject soundObject;
     private Audio audioClass;
+    private AudioSource audioInfo;
 
     int moveSpeed;
     public static bool dieFlag;
@@ -25,6 +26,8 @@ public class PlayerController : MonoBehaviour
     private bool isJumping = false;
     private bool isFalling = false;
 
+    private bool SEcontrol = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +35,7 @@ public class PlayerController : MonoBehaviour
         moveSpeed = walkSpeed;
         dieFlag = false;
         audioClass = soundObject.GetComponent<Audio>();
+        audioInfo = soundObject.GetComponent<AudioSource>();
 
     }
 
@@ -89,8 +93,13 @@ public class PlayerController : MonoBehaviour
         //Ž€‚ñ‚¾‚ç•œŠˆ‚·‚é
         if (dieFlag)
         {
-            audioClass.DeathSE();
-            if (Audio.finishSE)
+            if (!SEcontrol)
+            {
+                audioClass.DeathSE();
+                SEcontrol = true;
+            }
+
+            if (!audioInfo.isPlaying)
             {
                 SceneManager.LoadScene("main");
             }

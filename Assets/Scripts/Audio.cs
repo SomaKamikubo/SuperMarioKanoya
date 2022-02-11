@@ -12,7 +12,7 @@ public class Audio : MonoBehaviour
 
     public static bool finishSE;
 
-    
+
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -31,10 +31,7 @@ public class Audio : MonoBehaviour
     public void DeathSE()
     {
         audioSource.PlayOneShot(death);
-        if (!audioSource.isPlaying)
-        {
-            finishSE = true;
-        }
+
     }
 
 }
