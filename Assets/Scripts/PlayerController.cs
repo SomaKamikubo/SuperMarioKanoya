@@ -15,8 +15,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int dashRate;
     [SerializeField] private int jumpForce;
     [SerializeField] private Animator animator;
-    [SerializeField] private AudioClip jump;
-    AudioSource audioSource;
+    [SerializeField] private GameObject soundObject;
+    private Audio audioClass;
 
     int moveSpeed;
     public static bool dieFlag;
@@ -31,7 +31,8 @@ public class PlayerController : MonoBehaviour
     {
         moveSpeed = walkSpeed;
         dieFlag = false;
-        audioSource = GetComponent<AudioSource>();
+        audioClass = soundObject.GetComponent<Audio>();
+
     }
 
     // Update is called once per frame
@@ -88,7 +89,11 @@ public class PlayerController : MonoBehaviour
         //Ž€‚ñ‚¾‚ç•œŠˆ‚·‚é
         if (dieFlag)
         {
-            SceneManager.LoadScene("main");
+            audioClass.DeathSE();
+            if (Audio.finishSE)
+            {
+                SceneManager.LoadScene("main");
+            }
         }
     }
 
@@ -96,7 +101,8 @@ public class PlayerController : MonoBehaviour
     {
         isJumping = true;
         rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-        audioSource.PlayOneShot(jump);
+        audioClass.JumpSE();
+
     }
 
 
