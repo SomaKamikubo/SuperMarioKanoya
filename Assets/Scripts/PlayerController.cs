@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     private bool isJumping = false;
     private bool isFalling = false;
 
-    private bool SEcontrol = false;
+ 
 
 
     // Start is called before the first frame update
@@ -43,14 +43,15 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
+
         float horizontal = Input.GetAxis("Horizontal");
         isMoving = horizontal != 0;
         isFalling = rb.velocity.y < -0.5f;
 
-        Vector3 screen_LeftBottom = Camera.main.ScreenToWorldPoint(Vector3.zero);
-
         transform.GetComponent<Rigidbody2D>().AddForce(Vector2.left * 10);
         transform.GetComponent<Rigidbody2D>().AddForce(Vector2.right * 10);
+
+        Vector3 screen_LeftBottom = Camera.main.ScreenToWorldPoint(Vector3.zero);
 
 
         if (transform.position.x < screen_LeftBottom.x)
@@ -90,20 +91,7 @@ public class PlayerController : MonoBehaviour
             dieFlag = true;
         }
 
-        //Ž€‚ñ‚¾‚ç•œŠˆ‚·‚é
-        if (dieFlag)
-        {
-            if (!SEcontrol)
-            {
-                audioClass.DeathSE();
-                SEcontrol = true;
-            }
-
-            if (!audioInfo.isPlaying)
-            {
-                SceneManager.LoadScene("main");
-            }
-        }
+        
     }
 
     void Jump()

@@ -478,7 +478,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: b06854fc9fdf048428919c2f92ac345a, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -1312,6 +1312,8 @@ MonoBehaviour:
   audio_title: {fileID: 793668259}
   main_bgm: {fileID: 8300000, guid: e35215970f9089049adbbbccd4432651, type: 3}
   title_bgm: {fileID: 8300000, guid: 56a5225cb62ca7c46bef1cb02181733c, type: 3}
+  Player: {fileID: 686716086}
+  soundObject: {fileID: 399792957}
 --- !u!4 &793668258
 Transform:
   m_ObjectHideFlags: 0
@@ -7172,11 +7174,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6580933497820311808, guid: 115c6c98c989b5d4d922a2c16755efa8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 46.82
+      value: -19.4
       objectReference: {fileID: 0}
     - target: {fileID: 6580933497820311808, guid: 115c6c98c989b5d4d922a2c16755efa8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.46
+      value: -2.16
       objectReference: {fileID: 0}
     - target: {fileID: 6580933497820311808, guid: 115c6c98c989b5d4d922a2c16755efa8, type: 3}
       propertyPath: m_LocalPosition.z
