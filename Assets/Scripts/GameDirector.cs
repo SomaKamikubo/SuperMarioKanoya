@@ -18,14 +18,13 @@ public class GameDirector : MonoBehaviour
     [SerializeField] private GameObject soundObject;
     private Audio audioClass;
     private AudioSource audioInfo;
-
-    private bool SEcontrol = false;
+    private bool firstSE = false;
 
 
     void Start()
     {
-        countCoin = 0;
         MainBGM();
+        countCoin = 0;
         audioClass = soundObject.GetComponent<Audio>();
         audioInfo = soundObject.GetComponent<AudioSource>();
     }
@@ -33,31 +32,48 @@ public class GameDirector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        coinText.text = "Å~"+countCoin.ToString();
-        if (PlayerController.dieFlag)
+        coinText.text = "ÉRÉCÉìÅ@Å~"+countCoin.ToString();
+
+
+        if (isPlayerDie())
         {
-            if (!SEcontrol)
-            {
-                audioClass.DeathSE();
-                SEcontrol = true;
-                Player.SetActive(false);
-            }
-
-            if (!audioInfo.isPlaying)
-            {
-                SceneManager.LoadScene("main");
-            }
-
-            return;
+            DeathProcess();
         }
     }
 
-    public void MainBGM()
+    void MainBGM()
     {
         audio_main.PlayOneShot(main_bgm);
     }
-    public void TitleBGM()
+    void TitleBGM()
     {
         audio_title.PlayOneShot(title_bgm);
+    }
+
+    void DeathProcess()
+    {
+        if (!firstSE)
+        {
+            audioClass.DeathSE();
+            firstSE = true;
+            Player.SetActive(false);
+        }
+
+        if (!audioInfo.isPlaying)
+        {
+            SceneManager.LoadScene("main");
+        }
+    }
+    bool isPlayerDie()
+    {
+        if (transform.position.y < -6)
+        {
+            return true;
+        }
+        if (PlayerController.dieFlag)
+        {
+            return true;
+        }
+        return false;
     }
 }

@@ -14,10 +14,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int walkSpeed;
     [SerializeField] private int dashRate;
     [SerializeField] private int jumpForce;
+
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject soundObject;
     private Audio audioClass;
-    private AudioSource audioInfo;
 
     int moveSpeed;
     public static bool dieFlag;
@@ -35,7 +35,6 @@ public class PlayerController : MonoBehaviour
         moveSpeed = walkSpeed;
         dieFlag = false;
         audioClass = soundObject.GetComponent<Audio>();
-        audioInfo = soundObject.GetComponent<AudioSource>();
 
     }
 
@@ -43,26 +42,37 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
+        Move();
+        //ジャンプ
+        if (Input.GetKeyDown(KeyCode.Space) && !(rb.velocity.y < -0.5f) && !isJumping)
+        {
+            Jump();
+        }
 
+        isFalling = rb.velocity.y < -0.5f;
+        //アニメーション
+        animator.SetBool("IsMoving", isMoving);
+        animator.SetBool("IsJumping", isJumping);
+        animator.SetBool("IsFalling", isFalling);
+
+        
+    }
+
+    void Move()
+    {
+        //動く
         float horizontal = Input.GetAxis("Horizontal");
         isMoving = horizontal != 0;
-        isFalling = rb.velocity.y < -0.5f;
+        rb.velocity = new Vector2(horizontal * moveSpeed, rb.velocity.y);
 
-        transform.GetComponent<Rigidbody2D>().AddForce(Vector2.left * 10);
-        transform.GetComponent<Rigidbody2D>().AddForce(Vector2.right * 10);
-
+        //プレイヤーがカメラの左に行かないようにする
         Vector3 screen_LeftBottom = Camera.main.ScreenToWorldPoint(Vector3.zero);
-
-
         if (transform.position.x < screen_LeftBottom.x)
         {
-            Debug.Log(screen_LeftBottom.x);
             transform.position = new Vector3(screen_LeftBottom.x, transform.position.y, transform.position.z);
         }
 
-
-        Speed();
-
+        //プレイヤーの左右反転
         if (isMoving)
         {
             Vector3 scale = gameObject.transform.localScale;
@@ -73,39 +83,7 @@ public class PlayerController : MonoBehaviour
             gameObject.transform.localScale = scale;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && !(rb.velocity.y < -0.5f) && !isJumping)
-        {
-            Jump();
-        }
-        rb.velocity = new Vector2(Input.GetAxis("Horizontal") * moveSpeed, rb.velocity.y);
-
-        animator.SetBool("IsMoving", isMoving);
-        animator.SetBool("IsJumping", isJumping);
-        animator.SetBool("IsFalling", isFalling);
-
-        
-
-
-        if (transform.position.y < -6)
-        {
-            dieFlag = true;
-        }
-
-        
-    }
-
-    void Jump()
-    {
-        isJumping = true;
-        rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-        audioClass.JumpSE();
-
-    }
-
-
-
-    void Speed()
-    {
+        //SHIFTでスピードを上げる
         if (!isJumping)
         {
 
@@ -114,8 +92,15 @@ public class PlayerController : MonoBehaviour
             else
                 moveSpeed = walkSpeed;
         }
-        
     }
+
+    void Jump()
+    {
+        isJumping = true;
+        rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        audioClass.JumpSE();
+    }
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -131,14 +116,9 @@ public class PlayerController : MonoBehaviour
         if (collision.CompareTag("Stage"))
         {
             isJumping = false;
-            
         }
     }
 
-    public bool getIsJumping()
-    {
-        return isJumping;
-    }
 
 
 }
