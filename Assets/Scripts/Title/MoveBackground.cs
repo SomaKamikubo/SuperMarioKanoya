@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class MoveBackground : MonoBehaviour
 {
-    [SerializeField] private float speed;
+    private float speed = 0.01f;
+    float loop_number = 38.38f;
 
     // Start is called before the first frame update
     void Start()
@@ -19,7 +20,7 @@ public class MoveBackground : MonoBehaviour
 
         if(transform.position.x <= -19.19)
         {
-            transform.position = new Vector3(19.19f, 0, 0);
+            transform.position = new Vector3(loop_number, 0, 0);
         }
     }
 }

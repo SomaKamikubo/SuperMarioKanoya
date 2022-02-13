@@ -21,4 +21,10 @@ public class restart : MonoBehaviour
         Debug.Log("押された!");  // ログを出力
         SceneManager.LoadScene("main");
     }
+
+    public void OnClick2()
+    {
+        Debug.Log("押された!");  // ログを出力
+        SceneManager.LoadScene("title");
+    }
 }

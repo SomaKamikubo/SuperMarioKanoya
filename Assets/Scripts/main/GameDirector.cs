@@ -64,9 +64,10 @@ public class GameDirector : MonoBehaviour
             SceneManager.LoadScene("main");
         }
     }
+
     bool isPlayerDie()
     {
-        if (transform.position.y < -6)
+        if (Player.transform.position.y < -6)
         {
             return true;
         }
